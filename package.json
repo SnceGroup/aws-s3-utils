@@ -1,6 +1,6 @@
 {
   "name": "aws-s3-uploader",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "AWS Helper for uploading file to S3 bucket",
   "main": "index.js",
   "scripts": {
