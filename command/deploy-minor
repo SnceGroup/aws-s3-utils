@@ -4,10 +4,10 @@
 # New minor version
 ###
 
-git checkout master
-git pull origin master
+git checkout main
+git pull origin main
 
 npm version minor
 npm publish
 
-git push origin master
+git push origin main

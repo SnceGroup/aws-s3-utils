@@ -4,10 +4,10 @@
 # New patch version
 ###
 
-git checkout master
-git pull origin master
+git checkout main
+git pull origin main
 
 npm version patch
 npm publish
 
-git push origin master
+git push origin main
