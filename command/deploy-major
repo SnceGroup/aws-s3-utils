@@ -1,0 +1,13 @@
+#!/bin/bash
+
+###
+# New major version
+###
+
+git checkout main
+git pull origin main
+
+npm version major
+npm publish
+
+git push origin main

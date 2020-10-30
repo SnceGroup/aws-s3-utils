@@ -1,0 +1,13 @@
+#!/bin/bash
+
+###
+# New patch version
+###
+
+git checkout master
+git pull origin master
+
+npm version patch
+npm publish
+
+git push origin master

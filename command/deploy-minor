@@ -1,0 +1,13 @@
+#!/bin/bash
+
+###
+# New minor version
+###
+
+git checkout master
+git pull origin master
+
+npm version minor
+npm publish
+
+git push origin master
