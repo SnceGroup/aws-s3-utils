@@ -1,6 +1,6 @@
 {
   "name": "snce-aws-uploader",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "AWS Helper for uploading file to S3 bucket",
   "main": "index.js",
   "scripts": {
