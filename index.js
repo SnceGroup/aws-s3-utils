@@ -1,5 +1,11 @@
-const s3Uploader = require('./modules/_s3-uploader');
+const getAccessData = (function () {
+  const helper = require('./modules/_sw3-helper');
+  return helper.getAccessData();
+}())
 
-module.exports = {
-  s3Uploader: s3Uploader
-}
+const getBrand = (function () {
+  const helper = require('./modules/_sw3-helper');
+  return helper.getAccessData().BRAND;
+}())
+
+module.exports = { getAccessData, getBrand }

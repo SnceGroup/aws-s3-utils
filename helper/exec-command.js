@@ -1,8 +1,8 @@
-var execSync = require('child_process').execSync
-var path = require('path')
+const execSync = require('child_process').execSync
+const path = require('path')
 
-var SEPARATOR = process.platform === 'win32' ? ';' : ':'
-var env = Object.assign({}, process.env)
+let SEPARATOR = process.platform === 'win32' ? ';' : ':'
+let env = Object.assign({}, process.env)
 env.PATH = path.resolve('./node_modules/.bin') + SEPARATOR + env.PATH
 
 /**
@@ -12,7 +12,7 @@ env.PATH = path.resolve('./node_modules/.bin') + SEPARATOR + env.PATH
  * @param {String} command The command to execute.
  */
 module.exports = function (command) {
-  var output = execSync(command, {
+  let output = execSync(command, {
     cwd: process.cwd(),
     env: env,
     shell: true,
