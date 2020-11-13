@@ -2,7 +2,6 @@ const helper = require('../helper')
 require('dotenv').config()
 const fs = require('fs')
 const readdir = require('recursive-readdir')
-
 const currentBranch = helper.getCurrentBranch()
 const PROFILE = 'sandwatch-frontend'
 
@@ -35,10 +34,9 @@ const _getAccessData = function () {
   }
 }
 
-const _getFiles = function (dirPath) {
+function _getFiles (dirPath) {
   return fs.existsSync(dirPath) ? readdir(dirPath) : []
 }
-
 
 module.exports = {
   isLocaleRelease: _isLocalRelease,

@@ -26,17 +26,19 @@ const isLocalRelease = (function () {
  * Upload files frm given folder on AWS S3 bucket
  * @param {string} buildFolder folder to be uploade.
  */
-const upload = (function (buildFolder) {
-  const helper = require('./modules/_s3-uploader');
+function upload (buildFolder) {
+  const uploader = require('./modules/_s3-uploader');
   console.log('> Upload on AWS S3 Bucket Start')
-  helper.upload(buildFolder).then(() => {
+  uploader.run(buildFolder, getAccessData, isLocalRelease).then(() => {
     console.log('> Upload on AWS S3 Bucket End')
     process.exit(0)
+    return true
   })
     .catch(err => {
       console.error(err.message)
       process.exit(1)
+      return false
     })
-}())
+}
 
 module.exports = { getAccessData, getBrand, isLocalRelease, upload }
