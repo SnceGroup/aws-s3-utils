@@ -1,8 +1,7 @@
 const fs = require('fs')
 const async = require('async')
 const AWS = require('aws-sdk')
-const readdir = require('recursive-readdir')
-var helper = require('../helper')
+const helper = require('../helper')
 require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
@@ -17,7 +16,6 @@ async function deploy (upload, accessData, isLocalRelease) {
       accessKeyId: accessData.KEY,
       secretAccessKey: accessData.SECRET
     })
-    console.log('locale');
   } else {
     currentVersion = helper.getExecCommandOutput('cat MANIFEST').trim()
     AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: accessData.PROFILE })
