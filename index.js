@@ -22,14 +22,22 @@ const isLocalRelease = (function () {
   return helper.isLocaleRelease()
 }())
 
+// TODO add the possibility to choose which type of upload using a parameter:
+//  - using .env file
+//  - using AWS profile (new parameter for AWS profile to be added)
+
+// TODO add the possibility to choose which the release name:
+//  - adding a new parameter
+//  - use the default one from MANIFEST
+
 /**
- * Upload files frm given folder on AWS S3 bucket
- * @param {string} buildFolder folder to be uploade.
+ * Upload files from given folder on AWS S3 bucket
+ * @param {string} buildFolder folder to be uploaded.
  */
-function upload (buildFolder) {
+function upload(buildFolder) {
   const uploader = require('./modules/_s3-uploader');
   console.log('> Upload on AWS S3 Bucket Start')
-  uploader.run(buildFolder, getAccessData, isLocalRelease).then(() => {
+  uploader.run(buildFolder, getAccessData, isLocalRelease, 'local').then(() => {
     console.log('> Upload on AWS S3 Bucket End')
     process.exit(0)
     return true
@@ -41,4 +49,4 @@ function upload (buildFolder) {
     })
 }
 
-module.exports = { getAccessData, getBrand, isLocalRelease, upload }
+module.exports = {getAccessData, getBrand, isLocalRelease, upload}

@@ -8,34 +8,28 @@ const s3Helper = require('./_s3-helper');
 let s3
 let currentVersion = ''
 
-async function deploy (upload, accessData, isLocalRelease) {
+async function deploy(upload, accessData, isLocalRelease, releaseName = 'local') {
+  const currentVersion = isLocalRelease ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
   if (isLocalRelease) {
-    currentVersion = 'local'
     s3 = new AWS.S3({
       signatureVersion: 'v4',
       accessKeyId: accessData.KEY,
       secretAccessKey: accessData.SECRET
     })
   } else {
-    currentVersion = helper.getExecCommandOutput('cat MANIFEST').trim()
-    AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: accessData.PROFILE })
+    AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: accessData.PROFILE})
     s3 = new AWS.S3({
       signatureVersion: 'v4'
     })
   }
   const filesToUpload = await s3Helper.getFiles(upload)
   return new Promise((resolve, reject) => {
-    async.forEachOf(
-      filesToUpload,
-      async.asyncify(async file => {
+    async.forEachOf(filesToUpload, async.asyncify(async file => {
         const fileName = file.includes('MANIFEST') ? file.replace('build/', '') : file.replace('build/', currentVersion + '/')
-        let contentEncoding = ''
-        if (fileName.includes('style.css') || fileName.includes('style.min.css') || fileName.includes('style-ecommerce.min.css') || fileName.includes('style-ecommerce.css') || fileName.includes('style-alternative-font.css') || fileName.includes('style-alternative-font.min.css') || fileName.includes('js')) {
-          contentEncoding = 'gzip'
-        }
-        const Key =
-          'frontend/' + accessData.BRAND + '/' + fileName
+        const contentEncoding = (fileName.includes('.css') || fileName.includes('.js')) ? 'gzip' : '';
+        const Key = 'frontend/' + accessData.BRAND + '/' + fileName
         console.log(`uploading: [${Key}]`)
+
         if (!Key.includes('.html')) {
           return new Promise((res, rej) => {
             s3.upload(
@@ -52,7 +46,7 @@ async function deploy (upload, accessData, isLocalRelease) {
                 if (err) {
                   return rej(new Error(err))
                 }
-                res({ result: true })
+                res({result: true})
               }
             )
           })
@@ -62,7 +56,7 @@ async function deploy (upload, accessData, isLocalRelease) {
         if (err) {
           return reject(new Error(err))
         }
-        resolve({ result: true })
+        resolve({result: true})
       }
     )
   })
