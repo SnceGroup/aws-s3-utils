@@ -1,3 +1,5 @@
+// TODO Removed unused method from this helper and move s3_helper method in this file
+
 const config = require('../config.json')
 const fs = require('fs')
 const execSync = require('child_process').execSync

@@ -26,7 +26,7 @@ const isLocalRelease = (function () {
 //  - using .env file
 //  - using AWS profile (new parameter for AWS profile to be added)
 
-// TODO add the possibility to choose which the release name:
+// TODO add the possibility to choose the release name:
 //  - adding a new parameter
 //  - use the default one from MANIFEST
 
