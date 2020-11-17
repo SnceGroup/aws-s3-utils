@@ -1,3 +1,7 @@
+// TODO Export Function as a Class (https://www.tutorialsteacher.com/nodejs/nodejs-module-exports)
+//  - parameter in constructor
+//  - upload function to be added
+
 /**
  * Returns access data for AWS S3 account.
  */
