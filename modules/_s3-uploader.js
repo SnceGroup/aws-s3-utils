@@ -6,9 +6,8 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 let s3
-let currentVersion = ''
 
-async function deploy(upload, accessData, isLocalRelease, releaseName = 'local') {
+async function deploy(upload, accessData, isLocalRelease, releaseName) {
   const currentVersion = isLocalRelease ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
   if (isLocalRelease) {
     s3 = new AWS.S3({
