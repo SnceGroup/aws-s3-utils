@@ -13,6 +13,7 @@ module.exports = function (type, profile = '') {
   // TODO add the possibility to choose the release name:
   //  - adding a new parameter
   //  - use the default one from MANIFEST
+  // TODO add the possibility to choose if the css and js are gzipped:
   /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
