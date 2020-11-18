@@ -1,8 +1,3 @@
-
-// TODO add the possibility to choose the release name:
-//  - adding a new parameter
-//  - use the default one from MANIFEST
-
 /**
  * Snce Uploader object
  * Upload files from given folder on AWS S3 bucket
@@ -13,9 +8,11 @@ module.exports = function (type, profile = '') {
   const helper = require('./modules/_s3-helper');
   this.credentialType = type
   this.profileName = profile
-  console.log(this.credentialType);
   this.accessData = helper.getAccessData(this.credentialType, this.profileName)
 
+  // TODO add the possibility to choose the release name:
+  //  - adding a new parameter
+  //  - use the default one from MANIFEST
   /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
