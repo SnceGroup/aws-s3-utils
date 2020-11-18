@@ -1,56 +1,37 @@
-// TODO Export Function as a Class (https://www.tutorialsteacher.com/nodejs/nodejs-module-exports)
-//  - parameter in constructor
-//  - upload function to be added
-
-/**
- * Returns access data for AWS S3 account.
- */
-const getAccessData = (function () {
-  const helper = require('./modules/_s3-helper');
-  return helper.getAccessData();
-}())
-
-/**
- * Returns current Brand.
- */
-const getBrand = (function () {
-  const helper = require('./modules/_s3-helper');
-  return helper.getAccessData().BRAND;
-}())
-
-/**
- * Returns if is a local release
- */
-const isLocalRelease = (function () {
-  const helper = require('./modules/_s3-helper');
-  return helper.isLocaleRelease()
-}())
-
-// TODO add the possibility to choose which type of upload using a parameter:
-//  - using .env file
-//  - using AWS profile (new parameter for AWS profile to be added)
 
 // TODO add the possibility to choose the release name:
 //  - adding a new parameter
 //  - use the default one from MANIFEST
 
 /**
+ * Snce Uploader object
  * Upload files from given folder on AWS S3 bucket
- * @param {string} buildFolder folder to be uploaded.
+ * @param {string} type - type of credentials to be used (PROFILE: use AWS profile, ENV: use key and secret from .env file)
+ * @param {string} profile - profile name to be used for login using AWS profile (optional)
  */
-function upload(buildFolder) {
-  const uploader = require('./modules/_s3-uploader');
-  console.log('> Upload on AWS S3 Bucket Start')
-  uploader.run(buildFolder, getAccessData, isLocalRelease, 'local').then(() => {
-    console.log('> Upload on AWS S3 Bucket End')
-    process.exit(0)
-    return true
-  })
-    .catch(err => {
-      console.error(err.message)
-      process.exit(1)
-      return false
-    })
-}
+module.exports = function (type, profile = '') {
+  const helper = require('./modules/_s3-helper');
+  this.credentialType = type
+  this.profileName = profile
+  console.log(this.credentialType);
+  this.accessData = helper.getAccessData(this.credentialType, this.profileName)
 
-module.exports = {getAccessData, getBrand, isLocalRelease, upload}
+  /**
+   * Upload files from given folder on AWS S3 bucket
+   * @param {string} buildFolder folder to be uploaded.
+   */
+  this.upload = function upload(buildFolder) {
+    const uploader = require('./modules/_s3-uploader');
+    console.log('> Upload on AWS S3 Bucket Start')
+    uploader.run(buildFolder, this.accessData, this.credentialType, 'local').then(() => {
+      console.log('> Upload on AWS S3 Bucket End')
+      process.exit(0)
+      return true
+    })
+      .catch(err => {
+        console.error(err.message)
+        process.exit(1)
+        return false
+      })
+  }
+}

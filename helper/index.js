@@ -1,4 +1,4 @@
-// TODO Removed unused method from this helper and move s3_helper method in this file
+// TODO Removed unused method from this helper and move s3_helper method into this file
 
 const config = require('../config.json')
 const fs = require('fs')

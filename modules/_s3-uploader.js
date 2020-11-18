@@ -5,11 +5,11 @@ const helper = require('../helper')
 require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
-let s3
 
-async function deploy(upload, accessData, isLocalRelease, releaseName) {
-  const currentVersion = isLocalRelease ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
-  if (isLocalRelease) {
+async function deploy(upload, accessData, type, releaseName) {
+  let s3
+  const currentVersion = releaseName ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
+  if (type === 'ENV') {
     s3 = new AWS.S3({
       signatureVersion: 'v4',
       accessKeyId: accessData.KEY,

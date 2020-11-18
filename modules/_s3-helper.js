@@ -1,36 +1,22 @@
-const helper = require('../helper')
+// TODO move s3_helper method into generic helper files
 require('dotenv').config()
 const fs = require('fs')
 const readdir = require('recursive-readdir')
-const currentBranch = helper.getCurrentBranch()
-const PROFILE = 'sandwatch-frontend'
-
-/**
- * Returns if is a local release
- */
-const _isLocalRelease = function () {
-  const manifest = helper.getExecCommandOutput('cat MANIFEST').trim()
-  if (manifest === 'local') {
-    return true
-  }
-  return !(currentBranch === 'master' ||
-    currentBranch === 'prod' ||
-    currentBranch === 'pre' ||
-    currentBranch === 'staging' ||
-    currentBranch === 'dev')
-}
 
 /**
  * Returns access data for AWS S3 account.
+ * @param {string} type - type of credentials to be used (PROFILE: use AWS profile, ENV: use key and secret from .env file)
+ * @param {string} profile - profile name to be used for login using AWS profile (optional)
  */
-const _getAccessData = function () {
+const _getAccessData = function (type, profile) {
   const { BRAND } = process.env
   const { BUCKET } = process.env
-  if (_isLocalRelease()) {
+  if (type === 'PROFILE') {
+    const PROFILE = profile.length > 0 ? profile : 'sandwatch-frontend'
+    return { BUCKET: BUCKET, BRAND, PROFILE: PROFILE }
+  } else if (type === 'ENV') {
     const { BUCKETLOCAL, KEYLOCAL, SECRETLOCAL } = process.env
     return { BUCKET: BUCKETLOCAL, KEY: KEYLOCAL, SECRET: SECRETLOCAL, BRAND }
-  } else {
-    return { BUCKET: BUCKET, BRAND, PROFILE: PROFILE }
   }
 }
 
@@ -39,7 +25,6 @@ function _getFiles (dirPath) {
 }
 
 module.exports = {
-  isLocaleRelease: _isLocalRelease,
   getAccessData: _getAccessData,
   getFiles: _getFiles
 }
