@@ -17,11 +17,12 @@ module.exports = function (type, profile = '') {
   /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
+   * @param {string} releaseName name of the release to be used (optional) fallback is the string into MANIFEST file.
    */
-  this.upload = function upload(buildFolder) {
+  this.upload = function upload(buildFolder, releaseName = '') {
     const uploader = require('./modules/_s3-uploader');
     console.log('> Upload on AWS S3 Bucket Start')
-    uploader.run(buildFolder, this.accessData, this.credentialType, 'local').then(() => {
+    uploader.run(buildFolder, this.accessData, this.credentialType, releaseName).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
       process.exit(0)
       return true

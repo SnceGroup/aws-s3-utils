@@ -8,6 +8,7 @@ const readdir = require('recursive-readdir')
  * @param {string} type - type of credentials to be used (PROFILE: use AWS profile, ENV: use key and secret from .env file)
  * @param {string} profile - profile name to be used for login using AWS profile (optional)
  */
+// TODO upgrade this method for ENV file (adding a prefix)
 const _getAccessData = function (type, profile) {
   const { BRAND } = process.env
   const { BUCKET } = process.env

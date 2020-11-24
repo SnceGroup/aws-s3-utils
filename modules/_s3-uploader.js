@@ -8,7 +8,7 @@ const s3Helper = require('./_s3-helper');
 
 async function deploy(upload, accessData, type, releaseName) {
   let s3
-  const currentVersion = type === 'ENV' ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
+  const currentVersion = releaseName.length > 0 ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
   if (type === 'ENV') {
     s3 = new AWS.S3({
       signatureVersion: 'v4',
