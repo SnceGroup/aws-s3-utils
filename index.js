@@ -10,19 +10,16 @@ module.exports = function (type, profile = '') {
   this.profileName = profile
   this.accessData = helper.getAccessData(this.credentialType, this.profileName)
 
-  // TODO add the possibility to choose the release name:
-  //  - adding a new parameter
-  //  - use the default one from MANIFEST
-  // TODO add the possibility to choose if the css and js are gzipped:
   /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
    * @param {string} releaseName name of the release to be used (optional) fallback is the string into MANIFEST file.
+   * @param {string[]} compressedFileExt list of file extension gzipped in order to set right content encoding value (optional)
    */
-  this.upload = function upload(buildFolder, releaseName = '') {
+  this.upload = function upload(buildFolder, releaseName = '', compressedFileExt = []) {
     const uploader = require('./modules/_s3-uploader');
     console.log('> Upload on AWS S3 Bucket Start')
-    uploader.run(buildFolder, this.accessData, this.credentialType, releaseName).then(() => {
+    uploader.run(buildFolder, this.accessData, this.credentialType, releaseName, compressedFileExt).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
       process.exit(0)
       return true
