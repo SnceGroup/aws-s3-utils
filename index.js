@@ -10,6 +10,15 @@ module.exports = function (type, profile = '') {
   this.profileName = profile
   this.accessData = helper.getAccessData(this.credentialType, this.profileName)
 
+
+  /**
+   * Set Bucket name manually instead using .env file
+   * @param {string} bucketName bucket name.
+   */
+  this.setBucket = function setBucket(bucketName) {
+    this.accessData.BUCKET = bucketName;
+  }
+
   /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
@@ -38,15 +47,6 @@ module.exports = function (type, profile = '') {
   this.download = function (filePath) {
     const downloader = require('./modules/_s3-downloader.js');
     console.log('> Download from AWS S3 Bucket Start')
-    downloader.run(filePath, this.accessData).then(() => {
-      console.log('> Download from AWS S3 Bucket End')
-      process.exit(0)
-      return true
-    })
-      .catch(err => {
-        console.error(err.message)
-        process.exit(1)
-        return false
-      })
+    return downloader.run(filePath, this.accessData, this.credentialType);
   }
 }

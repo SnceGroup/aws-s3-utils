@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 require('dotenv').config()
 
-async function download(filePath, accessData) {
+async function download(filePath, accessData, type) {
   let s3
   if (type === 'ENV') {
     s3 = new AWS.S3({
