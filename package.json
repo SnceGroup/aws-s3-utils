@@ -1,7 +1,7 @@
 {
-  "name": "snce-aws-uploader",
+  "name": "snce-aws-utils",
   "version": "1.9.0",
-  "description": "AWS Helper for uploading file to S3 bucket",
+  "description": "AWS Helper for uploading/downloading files to S3 bucket",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,14 +14,15 @@
     "aws",
     "s3",
     "upload",
-    "bucket"
+    "bucket",
+    "download"
   ],
   "author": "SnceGroup",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SnceGroup/aws-s3-uploader/issues"
+    "url": "https://github.com/SnceGroup/aws-s3-utils/issues"
   },
-  "homepage": "https://github.com/SnceGroup/aws-s3-uploader#readme",
+  "homepage": "https://github.com/SnceGroup/aws-s3-utils#readme",
   "devDependencies": {
     "async": "^3.1.0",
     "aws-sdk": "^2.497.0",

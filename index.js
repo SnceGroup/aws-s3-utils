@@ -1,6 +1,6 @@
 /**
- * Snce Uploader object
- * Upload files from given folder on AWS S3 bucket
+ * Snce AWS Utils object
+ * Upload/Download files from given folder on AWS S3 bucket
  * @param {string} type - type of credentials to be used (PROFILE: use AWS profile, ENV: use key and secret from .env file)
  * @param {string} profile - profile name to be used for login using AWS profile (optional)
  */
@@ -21,6 +21,25 @@ module.exports = function (type, profile = '') {
     console.log('> Upload on AWS S3 Bucket Start')
     uploader.run(buildFolder, this.accessData, this.credentialType, releaseName, compressedFileExt).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
+      process.exit(0)
+      return true
+    })
+      .catch(err => {
+        console.error(err.message)
+        process.exit(1)
+        return false
+      })
+  }
+
+  /**
+   * Download single file  from given AWS S3 bucket
+   * @param {string} filePath path for the file to be downloaded.
+   */
+  this.download = function (filePath) {
+    const downloader = require('./modules/_s3-downloader.js');
+    console.log('> Download from AWS S3 Bucket Start')
+    downloader.run(filePath, this.accessData).then(() => {
+      console.log('> Download from AWS S3 Bucket End')
       process.exit(0)
       return true
     })
