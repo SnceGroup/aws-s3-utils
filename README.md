@@ -1,6 +1,6 @@
-# aws-s3-uploader
+# aws-s3-utils
 
-AWS Helper for uploading file to S3 bucket
+AWS Helper for uploading/downloading file to S3 bucket
 
 ## Requirements
 
@@ -8,7 +8,7 @@ AWS Helper for uploading file to S3 bucket
 
 ## Installation (for dummies)
 
-- Clone the repository (`git clone git@github.com:SnceGroup/aws-s3-uploader.git`).
+- Clone the repository (`git clone git@github.com:SnceGroup/aws-s3-utils.git`).
 
 # to do
 
