@@ -57,4 +57,14 @@ module.exports = function (type, profile = '') {
     console.log('> Download from AWS S3 Bucket Start')
     return downloader.run(filePath, this.accessData, this.credentialType);
   }
+
+  /**
+   * Delete single file  from given AWS S3 bucket
+   * @param {string} filePath path for the file to be downloaded.
+   */
+  this.delete = function (filePath) {
+    const remover = require('./modules/_s3-remover.js');
+    console.log('> Download from AWS S3 Bucket Start')
+    return remover.run(filePath, this.accessData, this.credentialType);
+  }
 }
