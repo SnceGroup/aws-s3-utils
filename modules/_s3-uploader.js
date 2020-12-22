@@ -6,7 +6,7 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 
-async function deploy(upload, accessData, type, releaseName, compressedFileExt) {
+async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt) {
   let s3
   const currentVersion = releaseName.length > 0 ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
   if (type === 'ENV') {
@@ -27,7 +27,8 @@ async function deploy(upload, accessData, type, releaseName, compressedFileExt) 
         let fileName = file.includes('MANIFEST') || file.includes('RELEASES') ? file.replace('build/', '') : file.replace('build/', currentVersion + '/')
         fileName = fileName.includes('MANIFEST') || fileName.includes('RELEASES') ? fileName.replace('change/', '') : fileName.replace('change/', currentVersion + '/')
         const contentEncoding = new RegExp(compressedFileExt.join("|")).test(fileName) ? 'gzip' : '';
-        const Key = 'frontend/' + accessData.BRAND + '/' + fileName
+        // const Key = 'frontend/' + accessData.BRAND + '/' + fileName
+        const Key = destination + '/' + fileName
         console.log(`uploading: [${Key}]`)
 
         if (!Key.includes('.html')) {
