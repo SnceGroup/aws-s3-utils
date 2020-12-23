@@ -22,6 +22,7 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
     })
   }
   const filesToUpload = await s3Helper.getFiles(upload)
+  // TODO updated replacing filename at the moment is hardcoded build/ change/ ? data.split('/').slice(1).join('/')
   return new Promise((resolve, reject) => {
     async.forEachOf(filesToUpload, async.asyncify(async file => {
         let fileName = file.includes('MANIFEST') || file.includes('RELEASES') ? file.replace('build/', '') : file.replace('build/', currentVersion + '/')
