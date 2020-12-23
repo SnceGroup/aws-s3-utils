@@ -54,7 +54,7 @@ module.exports = function (type, profile = '') {
    */
   this.download = function (filePath) {
     const downloader = require('./modules/_s3-downloader.js');
-    console.log('> Download from AWS S3 Bucket Start')
+    console.log('> Download [' + filePath + '] from AWS S3 Bucket')
     return downloader.run(filePath, this.accessData, this.credentialType);
   }
 
@@ -64,7 +64,7 @@ module.exports = function (type, profile = '') {
    */
   this.delete = function (filePath) {
     const remover = require('./modules/_s3-remover.js');
-    console.log('> Download from AWS S3 Bucket Start')
+    console.log('> Remove [' + filePath + '] from AWS S3 Bucket')
     return remover.run(filePath, this.accessData, this.credentialType);
   }
 }
