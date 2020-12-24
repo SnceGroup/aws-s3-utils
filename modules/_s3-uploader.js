@@ -22,13 +22,10 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
     })
   }
   const filesToUpload = await s3Helper.getFiles(upload)
-  // TODO updated replacing filename at the moment is hardcoded build/ change/ ? data.split('/').slice(1).join('/')
   return new Promise((resolve, reject) => {
     async.forEachOf(filesToUpload, async.asyncify(async file => {
-        let fileName = file.includes('MANIFEST') || file.includes('RELEASES') ? file.replace('build/', '') : file.replace('build/', currentVersion + '/')
-        fileName = fileName.includes('MANIFEST') || fileName.includes('RELEASES') ? fileName.replace('change/', '') : fileName.replace('change/', currentVersion + '/')
+        let fileName = file.includes('MANIFEST') || file.includes('RELEASES') ? file.split('/').slice(1).join('/') : currentVersion + '/' + file.split('/').slice(1).join('/')
         const contentEncoding = new RegExp(compressedFileExt.join("|")).test(fileName) ? 'gzip' : '';
-        // const Key = 'frontend/' + accessData.BRAND + '/' + fileName
         const Key = destination + '/' + fileName
         console.log(`uploading: [${Key}]`)
 
