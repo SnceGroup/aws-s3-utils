@@ -1,19 +1,45 @@
-# aws-s3-utils
+# AWS S3 Bucket Utils
 
-AWS Helper for uploading/downloading file to S3 bucket
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-## Requirements
+AWS Helper for manage file on AWS S3 bucket, available methods:
+- [Upload](#upload)
+- [Delete](#delete)
+- [Download](#download)
 
-- [Docker](https://www.docker.com/get-started)
 
-## Installation (for dummies)
+## Requirement 
 
-- Clone the repository (`git clone git@github.com:SnceGroup/aws-s3-utils.git`).
+AWS S3 bucket with valid credentials, access key using profile stored in .aws/credentials or using key from .env file
 
-# to do
+## Installation
 
-- How to configure (.env file and aws/permissions file)
+Using npm:
+```shell
+$ npm i -g npm
+$ npm i snce-aws-utils
+```
 
-- Put an example of build folder (MANIFEST, RELEASES etc)
+## Usage
 
-- How to use (explanation about parameter and different upload)
+Require module:
+```js
+// Load aws-s3-utils.
+const snceS3Utils = require('snce-aws-utils');
+```
+
+### Module Init
+
+
+
+### <a name="upload"></a>Upload
+
+
+### <a name="delete"></a>Delete
+
+
+### <a name="download"></a>Download
+
+
+
+
