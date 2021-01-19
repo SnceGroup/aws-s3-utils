@@ -6,7 +6,7 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 
-async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName, excludedFileExt) {
+async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName, excludedFileExt, pathToBeRemoved) {
   let s3, currentVersion;
   if(noReleaseName){
     currentVersion = '';
@@ -33,11 +33,11 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
         if (fileName.includes('/critical/')){
           contentEncoding = '';
         }
-        const Key = destination + '/' + fileName
-        console.log(`uploading: [${Key}]`)
-
-
-        if (!new RegExp(excludedFileExt.join("|")).test(Key)) {
+        let Key = destination + '/' + fileName
+        Key = Key.replace(pathToBeRemoved, '');
+        const checkExclusion = excludedFileExt.length > 0 ? !new RegExp(excludedFileExt.join("|")).test(Key) : true;
+        if (checkExclusion) {
+          console.log(`uploading: [${Key}]`)
           return new Promise((res, rej) => {
             s3.upload(
               {

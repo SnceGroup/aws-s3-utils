@@ -10,6 +10,7 @@ module.exports = function (type, profile = '') {
   this.profileName = profile
   this.accessData = helper.getAccessData(this.credentialType, this.profileName)
   this.excludedFileExt = ['html'];
+  this.pathToBeRemoved = '';
 
   /**
    * Set Bucket name manually instead using .env file
@@ -46,6 +47,15 @@ module.exports = function (type, profile = '') {
     return this.excludedFileExt = fileExt;
   }
 
+  /**
+   * Set folder path to be removed from file before upload on S3
+   * @param {string} path path to be removed.
+   */
+  this.setPathToBeRemoved = function setPathToBeRemoved(path) {
+    return this.pathToBeRemoved = path;
+  }
+
+
 
   /**
    * Upload files from given folder on AWS S3 bucket
@@ -58,7 +68,7 @@ module.exports = function (type, profile = '') {
   this.upload = function upload(buildFolder, destinationFolder= '', releaseName = '', compressedFileExt = [], noReleaseName= false) {
     const uploader = require('./modules/_s3-uploader');
     console.log('> Upload on AWS S3 Bucket Start')
-    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName, this.excludedFileExt).then(() => {
+    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName, this.excludedFileExt, this.pathToBeRemoved).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
       process.exit(0)
       return true
