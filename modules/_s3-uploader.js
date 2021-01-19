@@ -6,9 +6,13 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 
-async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt) {
-  let s3
-  const currentVersion = releaseName.length > 0 ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
+async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName) {
+  let s3, currentVersion;
+  if(noReleaseName){
+    currentVersion = '';
+  } else {
+    currentVersion = releaseName.length > 0 ? releaseName : helper.getExecCommandOutput('cat MANIFEST').trim();
+  }
   if (type === 'ENV') {
     s3 = new AWS.S3({
       signatureVersion: 'v4',
