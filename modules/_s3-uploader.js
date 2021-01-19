@@ -6,7 +6,7 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 
-async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName) {
+async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName, excludedFileExt) {
   let s3, currentVersion;
   if(noReleaseName){
     currentVersion = '';
@@ -36,7 +36,8 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
         const Key = destination + '/' + fileName
         console.log(`uploading: [${Key}]`)
 
-        if (!Key.includes('.html')) {
+
+        if (!new RegExp(excludedFileExt.join("|")).test(Key)) {
           return new Promise((res, rej) => {
             s3.upload(
               {

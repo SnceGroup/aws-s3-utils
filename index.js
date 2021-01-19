@@ -9,7 +9,7 @@ module.exports = function (type, profile = '') {
   this.credentialType = type
   this.profileName = profile
   this.accessData = helper.getAccessData(this.credentialType, this.profileName)
-
+  this.excludedFileExt = ['html'];
 
   /**
    * Set Bucket name manually instead using .env file
@@ -39,6 +39,15 @@ module.exports = function (type, profile = '') {
   }
 
   /**
+   * Set excluded file ext
+   * @param {string[]} fileExt file extension to be excluded during upload.
+   */
+  this.setExcludedFileExt = function setExcludedFileExt(fileExt) {
+    return this.excludedFileExt = fileExt;
+  }
+
+
+  /**
    * Upload files from given folder on AWS S3 bucket
    * @param {string} buildFolder folder to be uploaded.
    * @param {string} destinationFolder destination folder on S3 bucket
@@ -49,7 +58,7 @@ module.exports = function (type, profile = '') {
   this.upload = function upload(buildFolder, destinationFolder= '', releaseName = '', compressedFileExt = [], noReleaseName= false) {
     const uploader = require('./modules/_s3-uploader');
     console.log('> Upload on AWS S3 Bucket Start')
-    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName).then(() => {
+    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName, this.excludedFileExt).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
       process.exit(0)
       return true
