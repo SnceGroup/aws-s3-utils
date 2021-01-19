@@ -1,6 +1,6 @@
 {
   "name": "snce-aws-utils",
-  "version": "1.16.1",
+  "version": "1.17.0",
   "description": "AWS Helper for uploading/downloading files to S3 bucket",
   "main": "index.js",
   "scripts": {
