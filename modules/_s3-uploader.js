@@ -29,7 +29,10 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
   return new Promise((resolve, reject) => {
     async.forEachOf(filesToUpload, async.asyncify(async file => {
         let fileName = file.includes('MANIFEST') || file.includes('RELEASES') ? file.split('/').slice(1).join('/') : currentVersion + '/' + file.split('/').slice(1).join('/')
-        let contentEncoding = new RegExp(compressedFileExt.join("|")).test(fileName) ? 'gzip' : '';
+        let contentEncoding = '';
+        if(compressedFileExt.length > 0) {
+          contentEncoding = new RegExp(compressedFileExt.join("|")).test(fileName) ? 'gzip' : '';
+        }
         if (fileName.includes('/critical/')){
           contentEncoding = '';
         }
