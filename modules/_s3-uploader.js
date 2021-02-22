@@ -6,7 +6,7 @@ require('dotenv').config()
 const mime = require('mime-types')
 const s3Helper = require('./_s3-helper');
 
-async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName, excludedFileExt, pathToBeRemoved) {
+async function deploy(upload, destination, accessData, type, releaseName, compressedFileExt, noReleaseName, excludedFileExt, pathToBeRemoved, acl) {
   let s3, currentVersion;
   if(noReleaseName){
     currentVersion = '';
@@ -50,7 +50,7 @@ async function deploy(upload, destination, accessData, type, releaseName, compre
                 CacheControl: 'max-age=0,no-cache,no-store,must-revalidate',
                 ContentType: mime.lookup(file) ? mime.lookup(file) : '',
                 ContentEncoding: contentEncoding,
-                ACL: 'public-read'
+                ACL: acl
               },
               err => {
                 if (err) {

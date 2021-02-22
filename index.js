@@ -64,11 +64,12 @@ module.exports = function (type, profile = '') {
    * @param {string} releaseName name of the release to be used (optional) fallback is the string into MANIFEST file.
    * @param {string[]} compressedFileExt list of file extension gzipped in order to set right content encoding value (optional)
    * @param {boolean} noReleaseName flag for not using any release name: file will be uploaded directly on root of the bucket (optional)
+   * @param {string} acl to be used during uploading file (optional: public-read as default)
    */
-  this.upload = function upload(buildFolder, destinationFolder= '', releaseName = '', compressedFileExt = [], noReleaseName= false) {
+  this.upload = function upload(buildFolder, destinationFolder= '', releaseName = '', compressedFileExt = [], noReleaseName= false, acl = 'public-read') {
     const uploader = require('./modules/_s3-uploader');
     console.log('> Upload on AWS S3 Bucket Start')
-    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName, this.excludedFileExt, this.pathToBeRemoved).then(() => {
+    uploader.run(buildFolder, destinationFolder, this.accessData, this.credentialType, releaseName, compressedFileExt, noReleaseName, this.excludedFileExt, this.pathToBeRemoved, acl).then(() => {
       console.log('> Upload on AWS S3 Bucket End')
       process.exit(0)
       return true
