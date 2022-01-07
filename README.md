@@ -29,10 +29,25 @@ const snceS3Utils = require('snce-aws-utils');
 ```
 
 ### Module Init
+Two different authentication method available for S3:
+- `.ENV` file
+-  AWS `Profile`
 
+#### .ENV
+Sample of .env file
+```
+#FRONTEND LOCAL S3 BUCKET
+KEYLOCAL=
+BUCKETLOCAL=
+SECRETLOCAL=
+```
+
+#### Profile
+Set profile name and ensure that you already set valid credentials on AWS
 
 
 ### <a name="upload"></a>Upload
+
 
 
 ### <a name="delete"></a>Delete
