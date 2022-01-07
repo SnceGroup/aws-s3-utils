@@ -47,13 +47,34 @@ Set profile name and ensure that you already set valid credentials on AWS
 
 
 ### <a name="upload"></a>Upload
-
-
+Upload function to be used: `upload()`
+Parameter explanation:
+```
+   * Upload files from given folder on AWS S3 bucket
+   * @param {string} buildFolder folder to be uploaded.
+   * @param {string} destinationFolder destination folder on S3 bucket
+   * @param {string} releaseName name of the release to be used (optional) fallback is the string into MANIFEST file.
+   * @param {string[]} compressedFileExt list of file extension gzipped in order to set right content encoding value (optional)
+   * @param {boolean} noReleaseName flag for not using any release name: file will be uploaded directly on root of the bucket (optional)
+   * @param {string} acl to be used during uploading file (optional: public-read as default)
+```
 
 ### <a name="delete"></a>Delete
+Upload function to be used: `delete()`
+Parameter explanation:
+```
+   * Delete single file  from given AWS S3 bucket
+   * @param {string} filePath path for the file to be downloaded.
+```
 
 
 ### <a name="download"></a>Download
+Upload function to be used: `download()`
+Parameter explanation:
+```
+   * Download single file  from given AWS S3 bucket
+   * @param {string} filePath path for the file to be downloaded.
+```
 
 
 
